@@ -1,5 +1,4 @@
 Flask
-gTTS
 google-generativeai
 python-dotenv
 twilio
