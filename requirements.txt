@@ -1,7 +1,5 @@
 Flask
 gTTS
-SpeechRecognition
-PyAudio
 google-generativeai
 python-dotenv
 twilio
