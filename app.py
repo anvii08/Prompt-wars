@@ -3,7 +3,7 @@ import time
 import threading
 import io
 from gtts import gTTS
-from flask import Flask, jsonify, render_template, request, send_file
+from flask import Flask, jsonify, render_template, request, send_file, send_from_directory
 from llm_conversation import get_ai_response, get_recent_transcript, reset_transcript
 from dispatch import send_emergency_alert
 
@@ -45,7 +45,22 @@ def generate_audio_response(text):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    # Support both correct folder structure and flattened GitHub uploads
+    if os.path.exists('templates/index.html'):
+        return render_template('index.html')
+    elif os.path.exists('index.html'):
+        return send_file('index.html')
+    else:
+        return "Error: index.html not found. Please upload it to your repository.", 404
+
+@app.route('/static/<path:filename>')
+def serve_static(filename):
+    if os.path.exists(os.path.join('static', filename)):
+        return send_from_directory('static', filename)
+    elif os.path.exists(filename):
+        return send_from_directory('.', filename)
+    else:
+        return "File not found", 404
 
 @app.route('/update_location', methods=['POST'])
 def update_location():
