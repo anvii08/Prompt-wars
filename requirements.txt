@@ -1,0 +1,9 @@
+Flask
+gTTS
+SpeechRecognition
+PyAudio
+pygame
+google-generativeai
+python-dotenv
+twilio
+gunicorn
